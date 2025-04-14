@@ -1,0 +1,14 @@
+<template>
+  <div>
+    <h1>Signup Page</h1>
+    <p>Welcome to the signup page. This is a placeholder message.</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+// Placeholder script for future functionality
+</script>
+
+<style scoped>
+/* Add any styles for the signup page here */
+</style>
