@@ -1,4 +1,3 @@
-// Example .vscode/mcp.json
 {
   // 💡 Inputs will be prompted on first server start,
   //    then stored securely by VS Code.
@@ -17,7 +16,10 @@
     }
   ],
   "servers": {
-    // https://github.com/ppl-ai/modelcontextprotocol/
+    "neon": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.neon.tech/sse"]
+    },
     "Perplexity": {
       "type": "stdio",
       "command": "docker",
@@ -40,8 +42,7 @@
         "mcpdoc",
         "mcpdoc",
         "--urls",
-        "PrimeVue:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
-        "Prisma:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
+        "PrimeVue:https://rhythmicai.github.io/llms/primevue/llms.txt",
         "LangChain:https://js.lang.chat/llms.txt",
         "LangGraph:https://langchain-ai.lang.chat/langgraphjs/llms-full.txt",
         "--allowed-domains",
@@ -49,10 +50,6 @@
         "--transport",
         "stdio"
       ]
-    },
-    "neon": {
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.neon.tech/sse"]
     }
   }
 }
