@@ -1,5 +1,9 @@
 {
   "servers": {
+    "neon": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.neon.tech/sse"]
+    },
     "primevue-prisma-and-langgraphjs-docs-mcp": {
       "command": "uvx",
       "args": [
