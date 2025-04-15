@@ -1,0 +1,55 @@
+{
+  // 💡 Inputs will be prompted on first server start,
+  //    then stored securely by VS Code.
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "perplexity-key",
+      "description": "Perplexity API Key",
+      "password": true
+    },
+    {
+      "type": "promptString",
+      "id": "neon-key",
+      "description": "Neon API Key",
+      "password": true
+    }
+  ],
+  "servers": {
+    "neon": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.neon.tech/sse"]
+    },
+    "Perplexity": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "PERPLEXITY_API_KEY",
+        "mcp/perplexity-ask"
+      ],
+      "env": {
+        "PERPLEXITY_API_KEY": "${input:perplexity-key}"
+      }
+    },
+    "primevue-prisma-and-langgraphjs-docs-mcp": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "mcpdoc",
+        "mcpdoc",
+        "--urls",
+        "PrimeVue:https://rhythmicai.github.io/llms/primevue/llms.txt",
+        "LangChain:https://js.lang.chat/llms.txt",
+        "LangGraph:https://langchain-ai.lang.chat/langgraphjs/llms-full.txt",
+        "--allowed-domains",
+        "*",
+        "--transport",
+        "stdio"
+      ]
+    }
+  }
+}
