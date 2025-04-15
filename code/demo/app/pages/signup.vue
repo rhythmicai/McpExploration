@@ -1,87 +1,119 @@
 <template>
-  <Form @submit="onSubmit" class="p-fluid">
-    <FormField label="Name" :error="errors.name?.message">
-      <InputText v-model="formData.name" placeholder="Enter your name" />
-    </FormField>
+  <Card>
+    <template #title>Simple Card</template>
+    <template #content>
+      <Form
+        v-slot="$form"
+        :initialValues="{ name: '', email: '', address: '', phone: '' }"
+        :resolver="resolver"
+        @submit="onFormSubmit"
+        class="flex flex-col gap-4 w-full sm:w-96"
+      >
+        <!-- Name Field -->
+        <div class="flex flex-col gap-1">
+          <InputText name="name" type="text" placeholder="Name" fluid />
+          <Message
+            v-if="$form.name?.invalid"
+            severity="error"
+            size="small"
+            variant="simple"
+          >
+            {{ $form.name.error?.message }}
+          </Message>
+        </div>
 
-    <FormField label="Username" :error="errors.username?.message">
-      <InputText
-        v-model="formData.username"
-        placeholder="Enter your username"
-      />
-    </FormField>
+        <!-- Email Field -->
+        <div class="flex flex-col gap-1">
+          <InputText name="email" type="email" placeholder="Email" fluid />
+          <Message
+            v-if="$form.email?.invalid"
+            severity="error"
+            size="small"
+            variant="simple"
+          >
+            {{ $form.email.error?.message }}
+          </Message>
+        </div>
 
-    <FormField label="Email" :error="errors.email?.message">
-      <InputText v-model="formData.email" placeholder="Enter your email" />
-    </FormField>
+        <!-- Address Field -->
+        <div class="flex flex-col gap-1">
+          <InputText name="address" type="text" placeholder="Address" fluid />
+          <Message
+            v-if="$form.address?.invalid"
+            severity="error"
+            size="small"
+            variant="simple"
+          >
+            {{ $form.address.error?.message }}
+          </Message>
+        </div>
 
-    <FormField label="Phone" :error="errors.phone?.message">
-      <InputText
-        v-model="formData.phone"
-        placeholder="Enter your phone number"
-      />
-    </FormField>
+        <!-- Phone Number Field -->
+        <div class="flex flex-col gap-1">
+          <InputText
+            name="phone"
+            type="text"
+            placeholder="Phone Number"
+            fluid
+          />
+          <Message
+            v-if="$form.phone?.invalid"
+            severity="error"
+            size="small"
+            variant="simple"
+          >
+            {{ $form.phone.error?.message }}
+          </Message>
+        </div>
 
-    <FormField label="Address" :error="errors.address?.message">
-      <InputTextarea
-        v-model="formData.address"
-        placeholder="Enter your address"
-      />
-    </FormField>
+        <!-- Submit Button -->
+        <Button type="submit" severity="secondary" label="Submit" />
+      </Form>
 
-    <Button label="Submit" type="submit" class="p-mt-2" />
-  </Form>
+      <!-- Display Submitted Data -->
+      <Message
+        v-if="submittedData"
+        severity="info"
+        size="small"
+        variant="simple"
+      >
+        {{ submittedData }}
+      </Message>
+    </template>
+  </Card>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import { z } from "zod";
-import { useForm } from "vee-validate";
-import { InputText, Textarea, Button } from "primevue";
-import { Form, FormField } from "@primevue/forms";
 
-const signupSchema = z.object({
+const submittedData = ref<string | null>(null);
+
+const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  username: z.string().min(1, "Username is required"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits"),
   address: z.string().min(1, "Address is required"),
+  phone: z.string().regex(/^\d{10}$/, "Phone number must be 10 digits"),
 });
 
-type SignupFormData = z.infer<typeof signupSchema>;
-
-export default defineComponent({
-  name: "SignupForm",
-  setup() {
-    const formData = reactive<SignupFormData>({
-      name: "",
-      username: "",
-      email: "",
-      phone: "",
-      address: "",
+function resolver(values: any) {
+  try {
+    formSchema.parse(values);
+    return {};
+  } catch (error: any) {
+    const errors: Record<string, string> = {};
+    error.errors.forEach((err: any) => {
+      errors[err.path[0]] = err.message;
     });
+    return errors;
+  }
+}
 
-    const { errors, handleSubmit } = useForm({
-      validationSchema: signupSchema,
-      initialValues: formData,
-    });
-
-    const onSubmit = handleSubmit((values) => {
-      console.log("Form submitted:", values);
-    });
-
-    return {
-      formData,
-      errors,
-      onSubmit,
-    };
-  },
-});
+function onFormSubmit(values: any) {
+  submittedData.value = JSON.stringify(values, null, 2);
+}
 </script>
 
 <style scoped>
-.p-fluid {
-  max-width: 400px;
-  margin: auto;
-}
+/* Add any additional styling if needed */
 </style>
