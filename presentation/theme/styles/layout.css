@@ -55,7 +55,7 @@
   }
 
   strong {
-    @apply text-purple-800 dark:text-purple-100;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-red-500 to-pink-800 dark:(from-white to-indigo-500);
   }
 
   h1 + p {
