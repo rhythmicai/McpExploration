@@ -1,3 +1,21 @@
 {
-  "servers": {}
+  "servers": {
+    "primevue-prisma-and-langgraphjs-docs-mcp": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "mcpdoc",
+        "mcpdoc",
+        "--urls",
+        "PrimeVue:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
+        "Prisma:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
+        "LangChain:https://js.lang.chat/llms.txt",
+        "LangGraph:https://langchain-ai.lang.chat/langgraphjs/llms-full.txt",
+        "--allowed-domains",
+        "*",
+        "--transport",
+        "stdio"
+      ]
+    }
+  }
 }

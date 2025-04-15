@@ -1,119 +1,97 @@
 <template>
-  <Card>
-    <template #title>Simple Card</template>
-    <template #content>
-      <Form
-        v-slot="$form"
-        :initialValues="{ name: '', email: '', address: '', phone: '' }"
-        :resolver="resolver"
-        @submit="onFormSubmit"
-        class="flex flex-col gap-4 w-full sm:w-96"
+  <div class="signup-form">
+    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700"
+          >Name</label
+        >
+        <input
+          v-model="form.name"
+          type="text"
+          id="name"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700"
+          >Email</label
+        >
+        <input
+          v-model="form.email"
+          type="email"
+          id="email"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="address" class="block text-sm font-medium text-gray-700"
+          >Address</label
+        >
+        <input
+          v-model="form.address"
+          type="text"
+          id="address"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="phone" class="block text-sm font-medium text-gray-700"
+          >Phone Number</label
+        >
+        <input
+          v-model="form.phone"
+          type="tel"
+          id="phone"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          pattern="\\d{10}"
+          required
+        />
+        <p class="text-sm text-gray-500">Format: 10 digits</p>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
-        <!-- Name Field -->
-        <div class="flex flex-col gap-1">
-          <InputText name="name" type="text" placeholder="Name" fluid />
-          <Message
-            v-if="$form.name?.invalid"
-            severity="error"
-            size="small"
-            variant="simple"
-          >
-            {{ $form.name.error?.message }}
-          </Message>
-        </div>
+        Submit
+      </button>
+    </form>
 
-        <!-- Email Field -->
-        <div class="flex flex-col gap-1">
-          <InputText name="email" type="email" placeholder="Email" fluid />
-          <Message
-            v-if="$form.email?.invalid"
-            severity="error"
-            size="small"
-            variant="simple"
-          >
-            {{ $form.email.error?.message }}
-          </Message>
-        </div>
-
-        <!-- Address Field -->
-        <div class="flex flex-col gap-1">
-          <InputText name="address" type="text" placeholder="Address" fluid />
-          <Message
-            v-if="$form.address?.invalid"
-            severity="error"
-            size="small"
-            variant="simple"
-          >
-            {{ $form.address.error?.message }}
-          </Message>
-        </div>
-
-        <!-- Phone Number Field -->
-        <div class="flex flex-col gap-1">
-          <InputText
-            name="phone"
-            type="text"
-            placeholder="Phone Number"
-            fluid
-          />
-          <Message
-            v-if="$form.phone?.invalid"
-            severity="error"
-            size="small"
-            variant="simple"
-          >
-            {{ $form.phone.error?.message }}
-          </Message>
-        </div>
-
-        <!-- Submit Button -->
-        <Button type="submit" severity="secondary" label="Submit" />
-      </Form>
-
-      <!-- Display Submitted Data -->
-      <Message
-        v-if="submittedData"
-        severity="info"
-        size="small"
-        variant="simple"
-      >
-        {{ submittedData }}
-      </Message>
-    </template>
-  </Card>
+    <Message v-if="submitted" :info="form" />
+  </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from "vue";
-import { z } from "zod";
+import Message from "@/components/Message.vue";
 
-const submittedData = ref<string | null>(null);
-
-const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  address: z.string().min(1, "Address is required"),
-  phone: z.string().regex(/^\d{10}$/, "Phone number must be 10 digits"),
+const form = ref({
+  name: "",
+  email: "",
+  address: "",
+  phone: "",
 });
 
-function resolver(values: any) {
-  try {
-    formSchema.parse(values);
-    return {};
-  } catch (error: any) {
-    const errors: Record<string, string> = {};
-    error.errors.forEach((err: any) => {
-      errors[err.path[0]] = err.message;
-    });
-    return errors;
-  }
-}
+const submitted = ref(false);
 
-function onFormSubmit(values: any) {
-  submittedData.value = JSON.stringify(values, null, 2);
-}
+const handleSubmit = () => {
+  submitted.value = true;
+};
 </script>
 
 <style scoped>
-/* Add any additional styling if needed */
+.signup-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 </style>
