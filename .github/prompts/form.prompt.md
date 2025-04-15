@@ -11,4 +11,14 @@ Requirements for the form:
   - Use TypeScript types to ensure type safety
   - Customize UX-friendly validation Rules
 - Use PrimeVue components for the UI
-- ALways put the form in a Card component 'primevue/card'
+- Always put the form in a Card component 'primevue/card' with a <template #title></template> and <template #content></template>
+- Here is an example of how to implement a resolver
+
+```
+import { zodResolver } from '@primevue/forms/resolvers/zod';
+const resolver = zodResolver(
+    z.object({
+        username: z.string().min(1, { message: 'Username is required via Zod.' })
+    })
+);
+```

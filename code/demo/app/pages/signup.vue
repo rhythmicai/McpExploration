@@ -1,97 +1,117 @@
 <template>
-  <div class="signup-form">
-    <form @submit.prevent="handleSubmit" class="space-y-4">
-      <div>
-        <label for="name" class="block text-sm font-medium text-gray-700"
-          >Name</label
+  <div class="flex justify-center items-center min-h-screen bg-gray-50">
+    <Card class="w-full max-w-md">
+      <template #title>Sign Up</template>
+      <template #content>
+        <Form
+          v-slot="$form"
+          :initialValues="initialValues"
+          :resolver="resolver"
+          @submit="onSubmit"
+          class="flex flex-col gap-4"
         >
-        <input
-          v-model="form.name"
-          type="text"
-          id="name"
-          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700"
-          >Email</label
-        >
-        <input
-          v-model="form.email"
-          type="email"
-          id="email"
-          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="address" class="block text-sm font-medium text-gray-700"
-          >Address</label
-        >
-        <input
-          v-model="form.address"
-          type="text"
-          id="address"
-          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="phone" class="block text-sm font-medium text-gray-700"
-          >Phone Number</label
-        >
-        <input
-          v-model="form.phone"
-          type="tel"
-          id="phone"
-          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          pattern="\\d{10}"
-          required
-        />
-        <p class="text-sm text-gray-500">Format: 10 digits</p>
-      </div>
-
-      <button
-        type="submit"
-        class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Submit
-      </button>
-    </form>
-
-    <Message v-if="submitted" :info="form" />
+          <div class="flex flex-col gap-1">
+            <InputText name="name" type="text" placeholder="Full Name" />
+            <Message
+              v-if="$form.name?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+              >{{ $form.name.error?.message }}</Message
+            >
+          </div>
+          <div class="flex flex-col gap-1">
+            <InputText name="email" type="email" placeholder="Email" />
+            <Message
+              v-if="$form.email?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+              >{{ $form.email.error?.message }}</Message
+            >
+          </div>
+          <div class="flex flex-col gap-1">
+            <InputText name="address" type="text" placeholder="Address" />
+            <Message
+              v-if="$form.address?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+              >{{ $form.address.error?.message }}</Message
+            >
+          </div>
+          <div class="flex flex-col gap-1">
+            <InputText name="phone" type="text" placeholder="Phone Number" />
+            <Message
+              v-if="$form.phone?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+              >{{ $form.phone.error?.message }}</Message
+            >
+          </div>
+          <Button type="submit" label="Sign Up" class="mt-2" />
+        </Form>
+        <Message v-if="submitted" severity="success" class="mt-4">
+          <div>
+            <div><b>Name:</b> {{ submittedData.name }}</div>
+            <div><b>Email:</b> {{ submittedData.email }}</div>
+            <div><b>Address:</b> {{ submittedData.address }}</div>
+            <div><b>Phone:</b> {{ submittedData.phone }}</div>
+          </div>
+        </Message>
+      </template>
+    </Card>
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import Message from "@/components/Message.vue";
+<script setup lang="ts">
+import { ref, reactive } from "vue";
+import { z } from "zod";
+import { Form } from "@primevue/forms";
+import InputText from "primevue/inputtext";
+import Button from "primevue/button";
+import Message from "primevue/message";
+import Card from "primevue/card";
+import { zodResolver } from "@primevue/forms/resolvers/zod";
 
-const form = ref({
+interface SignupForm {
+  name: string;
+  email: string;
+  address: string;
+  phone: string;
+}
+
+const initialValues: SignupForm = {
   name: "",
   email: "",
   address: "",
   phone: "",
+};
+
+const schema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  address: z.string().min(5, "Address is required"),
+  phone: z
+    .string()
+    .regex(
+      /^(\+\d{1,3}[- ]?)?\d{10,15}$/,
+      "Phone must be a valid number (10-15 digits, may start with +country code)"
+    ),
 });
 
-const submitted = ref(false);
+const resolver = zodResolver(schema);
 
-const handleSubmit = () => {
+const submitted = ref(false);
+const submittedData = reactive<SignupForm>({ ...initialValues });
+
+function onSubmit(e: any) {
   submitted.value = true;
-};
+  Object.assign(submittedData, e.values);
+}
 </script>
 
 <style scoped>
-.signup-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 1rem;
-  background-color: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+/* BEM naming for custom styles if needed */
 </style>
