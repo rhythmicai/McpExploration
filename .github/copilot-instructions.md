@@ -5,13 +5,18 @@
 - PrimeVue controls for UI
 - Prisma and Zenstack for DAL
 
-# For ANY question about LangGraph or PrimeVue, Mud Blazor, use #list_doc_sources and #fetch_docs to help answer.
+
+# For ANY question about LangGraph or Prisma, use #list_doc_sources and #fetch_docs to help answer.
 
 - reflect on the urls in the llms.txt,
 - reflect on the input question,
 - call fetch_docs on any urls relevant to the questions
 
-# Vue 3 Composition API – Copilot Instructions
+# Anytime you use a Primevue control, use #list_doc_sources and #fetch_docs to identify the best practices in using a given control.
+
+- reflect on possible llms.txt you can use and identify the best one
+- reflect on the control you want to use
+- call fetch_docs on any urls relevant to the control
 
 ## Framework & Syntax
 
