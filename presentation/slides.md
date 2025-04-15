@@ -185,10 +185,11 @@ Warning: Live demos ahead!
 
 - A plain-ole chat bot in your coder (GitHub Copilot)
 - The power of prompt engineering
+- Customizing Copilot
 - Emerging standards: `llms.txt`
 - Emerging standards: `Model Context Protocol`
 - Adding MCP
-- Customizing Copilot
+
 
 ---
 layout: center
@@ -250,8 +251,8 @@ handle: "chris-is-agile"
 Prompt engineering is helpful, but sometimes if you get the prompt right, you really haven't saved yourself a ton of time. 
 
 > And what about that noob down the hall? Or the ornery dev in the other room that doesn't want none of your new fangled crap???
-
-Well that's where tools like Windsurf, Cursor, and now, VSCode CoPilot come in handy.
+>
+> Well that's where tools like Windsurf, Cursor, and now, VSCode CoPilot come in handy.
 
 ---
 layout: cover
@@ -267,7 +268,7 @@ You know all that documentation you wrote? You can turn that into prompts with a
 > [Adding repository custom instructions for GitHub Copilot - GitHub Docs](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot#enabling-or-disabling-repository-custom-instructions)
   - Open your command pallet  <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
   - Open `settings.json`
-  - Activate `github.copilot.chat.codeGeneration.instructions
+  - Activate `github.copilot.chat.codeGeneration.instructions`
   - Add `./github/copilot-instructions.md` 
 
 
