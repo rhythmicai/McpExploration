@@ -33,7 +33,6 @@ logos: [
 
 - I like to do the startup thing
 - I love teaching
-- I've developed for many moons...and yes, much of that has atrophied
 - I've coached with and for some big names
 
 ---
@@ -376,8 +375,7 @@ handle: "chris-is-agile"
 2. Create  ``./vscode/mcp.json``
 3. Add your server and choose your llms
 
-  - __PrimeVue:__ https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
-  - __Prisma:__ https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
+  - __PrimeVue:__ https://rhythmicai.github.io/llms/primevue/llms-.txt",  
   - __LangChain:__ https://js.lang.chat/llms.txt",
   - __LangGraph:__ https://langchain-ai.lang.chat/langgraphjs/llms-full.txt",   
 
@@ -417,8 +415,7 @@ layout: full
         "mcpdoc",
         "mcpdoc",
         "--urls",
-        "PrimeVue:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
-        "Prisma:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
+        "PrimeVue:https://rhythmicai.github.io/llms/primevue/llms.txt",
         "LangChain:https://js.lang.chat/llms.txt",
         "LangGraph:https://langchain-ai.lang.chat/langgraphjs/llms-full.txt",
         "--allowed-domains",
@@ -462,8 +459,7 @@ Keep secure stuff secure.
         "mcpdoc",
         "mcpdoc",
         "--urls",
-        "PrimeVue:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
-        "Prisma:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
+        "PrimeVue:https://rhythmicai.github.io/llms/primevue/llms.txt",
         "LangChain:https://js.lang.chat/llms.txt",
         "LangGraph:https://langchain-ai.lang.chat/langgraphjs/llms-full.txt",
         "--allowed-domains",
@@ -501,8 +497,7 @@ Keep secure stuff secure.
         "mcpdoc",
         "mcpdoc",
         "--urls",
-        "PrimeVue:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
-        "Prisma:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
+        "PrimeVue:https://rhythmicai.github.io/llms/primevue/llms.txt",
         "LangChain:https://js.lang.chat/llms.txt",
         "LangGraph:https://langchain-ai.lang.chat/langgraphjs/llms-full.txt",
         "--allowed-domains",
@@ -550,8 +545,7 @@ Keep secure stuff secure.
         "mcpdoc",
         "mcpdoc",
         "--urls",
-        "PrimeVue:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
-        "Prisma:https://rhythmicai.github.io/llms/mudblazor/llms-full.txt",
+        "PrimeVue:https://rhythmicai.github.io/llms/primevue/llms-full.txt",
         "LangChain:https://js.lang.chat/llms.txt",
         "LangGraph:https://langchain-ai.lang.chat/langgraphjs/llms-full.txt",
         "--allowed-domains",
@@ -574,5 +568,24 @@ handle: "chris-is-agile"
 
 # ❓ Questions❓
 I __might__ have answers
+
+![MCP Project QR Code](/images/mcpqr.png)
+
+---
+layout: table-contents
+logoHeader: "https://www.gorhythmic.com/4.icon.png"
+website: "gorhythmic.com"
+handle: "chris-is-agile"
+---
+
+# Links
+Featured in this talk
+- [Adding repository custom instructions for GitHub Copilot - GitHub Docs](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot#enabling-or-disabling-repository-custom-instructions)
+- [LLMs.txt NPX Generator | Firecrawl](https://docs.firecrawl.dev/features/alpha/llmstxt-npx)
+- [McpDoc](https://github.com/langchain-ai/mcpdoc)
+- [LLMS.txt Directory](https://llmstxt.directory/)
+- [The LLMS.txt file](https://llmstxt.org/)
+- [Model Context Protocol](https://modelcontextprotocol.io/introduction)
+- [A list of MCP Servers](https://mcpservers.com/)
 
 ---
